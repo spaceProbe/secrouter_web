@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg" />
+    <img src="assets/logo.svg" alt="SecRouter — Secure AI API Router" width="300" />
+  </picture>
+</p>
+
 # SecRouter — marketing site
 
 The landing page for [SecRouter](https://github.com/spaceProbe/secrouter), built to the designer handoff (`Secure AI API Router Logo` bundle). Static, dependency-free, SEO-optimized.
