@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#232a16" />
+
+  <title>SecRouter — Secure AI API Gateway | Govern AI Use &amp; Contain AI Spend</title>
+  <meta name="description" content="SecRouter is the secure API gateway between your teams and every AI model — SSO authentication, per-user policy and spend caps, deny-by-default egress, and a hash-chained audit log. The control plane for AI, built for defense and regulated industry. One endpoint. Total control." />
+  <meta name="keywords" content="secure AI gateway, AI control plane, AI access control, LLM cost control, AI governance, AI spend management, egress control, data residency, model allowlist, OIDC SSO, self-hosted AI router, GovCloud AI, CMMC AI, enterprise AI security, AI audit log" />
+  <link rel="canonical" href="https://secrouter.io/" />
+  <meta name="robots" content="index, follow" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="SecRouter" />
+  <meta property="og:url" content="https://secrouter.io/" />
+  <meta property="og:title" content="SecRouter — Govern AI Use. Contain AI Spend." />
+  <meta property="og:description" content="The secure API gateway between your teams and every model: SSO, per-user policy, deny-by-default egress, and hard spend caps. Built for defense and regulated industry." />
+  <meta property="og:image" content="https://secrouter.io/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SecRouter — Govern AI Use. Contain AI Spend." />
+  <meta name="twitter:description" content="The secure control plane for enterprise AI: SSO, policy enforcement, deny-by-default egress, and hard spend caps in front of every model." />
+  <meta name="twitter:image" content="https://secrouter.io/og-image.png" />
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "SecRouter",
+    "applicationCategory": "SecurityApplication",
+    "applicationSubCategory": "AI Gateway / Control Plane",
+    "operatingSystem": "Linux, Docker, Self-hosted, GovCloud",
+    "description": "The secure control plane for enterprise AI. A drop-in API gateway that authenticates every request, enforces model and budget policy, controls egress by data classification, and logs every decision — built for defense and regulated industry.",
+    "url": "https://secrouter.io/",
+    "keywords": "secure AI gateway, AI control plane, AI access control, LLM cost control, AI governance"
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- NAV -->
+  <header class="nav-wrap" id="top">
+    <nav class="container nav" aria-label="Primary">
+      <a class="brand" href="#top" aria-label="SecRouter home">
+        <svg class="mark" width="26" height="29" viewBox="0 0 48 56" fill="none" aria-hidden="true">
+          <polygon points="24,2 44,13 44,37 24,54 4,37 4,13" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+          <path d="M24 28 L24 14 M24 28 L14 38 M24 28 L34 38" stroke="currentColor" stroke-width="2.2"/>
+          <circle cx="24" cy="28" r="5" fill="var(--olive)"/>
+        </svg>
+        <span class="wordmark"><span class="sec">SEC</span>ROUTER</span>
+      </a>
+      <div class="nav-links">
+        <a href="#platform">Platform</a>
+        <a href="#security">Security</a>
+        <a href="#spend">Spend</a>
+        <a href="#docs">Docs</a>
+      </div>
+      <a class="btn btn-solid nav-access" href="#cta">Request access</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-deco" aria-hidden="true">
+        <svg width="520" height="600" viewBox="0 0 48 56" fill="none">
+          <polygon points="24,2 44,13 44,37 24,54 4,37 4,13" stroke="#f5f3ea" stroke-width="0.7" stroke-linejoin="round"/>
+          <path d="M24 28 L24 14 M24 28 L14 38 M24 28 L34 38 M24 14 L14 38 M24 14 L34 38 M14 38 L34 38" stroke="#f5f3ea" stroke-width="0.5"/>
+        </svg>
+      </div>
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <p class="pill"><span class="dot"></span> Built for defense &amp; regulated industry</p>
+          <h1>Govern AI use.<br />Contain AI spend.</h1>
+          <p class="lede">SecRouter is the secure API gateway between your teams and every model — authenticating every request, enforcing policy, controlling egress, and capping spend across the organization. One endpoint. Total control.</p>
+          <div class="hero-actions">
+            <a class="btn btn-hero" href="#cta">Request a briefing</a>
+            <a class="btn btn-outline-dark" href="#platform">View architecture</a>
+          </div>
+          <p class="trust-mini">Self-hosted<span>Deny-by-default egress</span><span>Air-gap ready</span></p>
+        </div>
+
+        <!-- inspected-request card -->
+        <div class="req-card reveal" aria-hidden="true">
+          <div class="req-head">
+            <span>POST /v1/chat/completions</span>
+            <span class="req-ok">● GOVERNED</span>
+          </div>
+          <div class="req-body">
+            <div class="req-principal">PRINCIPAL&nbsp; alice@dod.mil <em class="tag">CUI</em></div>
+            <div class="req-prompt">"Summarize the Q3 contract analysis and flag delivery risks…"</div>
+            <div class="req-checks">
+              <div><span class="ck">✓</span> Authenticated — OIDC + MFA</div>
+              <div><span class="ck">✓</span> Model allowlist — claude-gov ok</div>
+              <div><span class="ck">✓</span> Budget — $1,240 / $5,000 team</div>
+            </div>
+            <div class="req-foot">
+              <span>ROUTED → GOVCLOUD</span>
+              <span class="req-ok">142ms · LOGGED</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUST STRIP -->
+    <section class="trust">
+      <div class="container trust-row">
+        <span>NIST SP 800-171 R2</span><i>/</i><span>CMMC L3 control mapping</span><i>/</i><span>FIPS-aware</span><i>/</i>
+        <span>OIDC SSO + MFA</span><i>/</i><span>Deny-by-default egress</span><i>/</i><span>Self-hosted or GovCloud</span>
+      </div>
+    </section>
+
+    <!-- VALUE PILLARS -->
+    <section class="band" id="platform">
+      <div class="container">
+        <p class="eyebrow olive">The control plane for AI</p>
+        <h2 class="mono headline">Shadow AI is a security incident and a budget leak. SecRouter closes both.</h2>
+        <p class="lede-2">Sit between your people and the models. Inspect every request, enforce every policy, and meter every dollar — without slowing teams down.</p>
+        <div class="pillars">
+          <article class="card reveal">
+            <div class="tile"><svg width="22" height="25" viewBox="0 0 48 56" fill="none" aria-hidden="true"><polygon points="24,2 44,13 44,37 24,54 4,37 4,13" stroke="#dfe4c4" stroke-width="3" stroke-linejoin="round"/><circle cx="24" cy="28" r="6" fill="#aebb78"/></svg></div>
+            <h3 class="mono">Secure AI use</h3>
+            <p>SSO-authenticated requests, per-user model allowlists, and a deny-by-default egress gate. Data only reaches destinations you've authorized — CUI never leaves the boundary.</p>
+          </article>
+          <article class="card reveal">
+            <div class="tile"><svg width="22" height="22" viewBox="0 0 56 56" fill="none" aria-hidden="true"><path d="M8 40 L22 24 L34 32 L48 14" stroke="#aebb78" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="48" cy="14" r="5" fill="#dfe4c4"/></svg></div>
+            <h3 class="mono">Contain IT spend</h3>
+            <p>Hard budgets and rate limits per group and user. Route each request to the cheapest capable model and cut off runaway usage before the invoice arrives.</p>
+          </article>
+          <article class="card reveal">
+            <div class="tile"><svg width="22" height="22" viewBox="0 0 56 56" fill="none" aria-hidden="true"><rect x="10" y="10" width="36" height="36" rx="3" stroke="#aebb78" stroke-width="4"/><path d="M20 28 L26 34 L38 20" stroke="#dfe4c4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3 class="mono">Prove governance</h3>
+            <p>Hash-chained, tamper-evident audit of every request, decision, and route — metadata only, never prompt content. RBAC and SSO, with exportable evidence for auditors and accreditation.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="band band-tight">
+      <div class="container">
+        <p class="eyebrow olive">Drop-in architecture</p>
+        <h2 class="mono">One endpoint in front of every model</h2>
+        <p class="sub">Point your existing SDKs at SecRouter. Change the base URL — keep your code.</p>
+        <div class="arch reveal">
+          <div class="arch-col">
+            <p class="arch-label">Your teams &amp; apps</p>
+            <div class="arch-chip">Analyst tooling</div>
+            <div class="arch-chip">Internal copilots</div>
+            <div class="arch-chip">Batch pipelines</div>
+          </div>
+          <div class="arch-arrow" aria-hidden="true">→</div>
+          <div class="arch-core">
+            <p class="arch-label light"><svg width="14" height="16" viewBox="0 0 48 56" fill="none" aria-hidden="true"><polygon points="24,2 44,13 44,37 24,54 4,37 4,13" stroke="#aebb78" stroke-width="3" stroke-linejoin="round"/><circle cx="24" cy="28" r="7" fill="#aebb78"/></svg> SecRouter control plane</p>
+            <div class="arch-steps">
+              <span>Authenticate</span><span>Enforce policy</span>
+              <span>Gate egress</span><span>Meter spend</span>
+              <span class="span2">Route to best / cheapest model</span>
+              <span class="span2 hot">Log every decision</span>
+            </div>
+          </div>
+          <div class="arch-arrow" aria-hidden="true">→</div>
+          <div class="arch-col">
+            <p class="arch-label">Model providers</p>
+            <div class="arch-chip">Commercial APIs</div>
+            <div class="arch-chip">GovCloud endpoints</div>
+            <div class="arch-chip">Self-hosted / open</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECURITY BAND -->
+    <section class="band dark" id="security">
+      <div class="container sec-grid">
+        <div class="reveal">
+          <p class="eyebrow light">Security &amp; deployment</p>
+          <h2 class="mono">Deployed where your data is allowed to live</h2>
+          <p class="on-dark-muted">Run SecRouter fully self-hosted, in GovCloud, or air-gapped. Nothing leaves your boundary unless policy says so — and you hold the keys.</p>
+          <a class="brief-link" href="https://github.com/spaceProbe/secrouter/blob/main/docs/compliance/cmmc-control-matrix.md">Read the security brief →</a>
+        </div>
+        <div class="sec-cards reveal">
+          <div class="sec-card"><h4>Air-gapped install</h4><p>No outbound calls required — route only to in-boundary or GovCloud endpoints.</p></div>
+          <div class="sec-card"><h4>RBAC &amp; SSO</h4><p>OIDC SSO with MFA; group and role policy mapped to your IdP.</p></div>
+          <div class="sec-card"><h4>Metadata-only logs</h4><p>Prompt and response content is never stored — only decisions, counts, and hashes.</p></div>
+          <div class="sec-card"><h4>Tamper-evident logs</h4><p>Hash-chained audit trail, exportable for accreditation.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPEND -->
+    <section class="band" id="spend">
+      <div class="container spend-grid">
+        <div class="reveal">
+          <p class="eyebrow olive">Cost control</p>
+          <h2 class="mono">Every token has an owner and a ceiling</h2>
+          <p class="muted-p">Attribute spend down to the principal, set hard caps, and route to cheaper models automatically. Finance gets one bill; IT gets the controls.</p>
+          <ol class="num-list">
+            <li><span class="n">01</span> Per-group and per-user budgets with rate limits and hard auto-cutoff</li>
+            <li><span class="n">02</span> Smart routing trims spend by sending easy calls to small models</li>
+            <li><span class="n">03</span> Per-user, per-model, per-day usage you can export for chargeback</li>
+          </ol>
+        </div>
+        <div class="dash reveal" aria-hidden="true">
+          <div class="dash-head"><span class="mono">SPEND · LAST 30 DAYS</span><span class="mono olive-t">▼ 34% vs. unmanaged</span></div>
+          <div class="dash-body">
+            <div class="dash-fig"><span class="mono big" data-count="18420" data-prefix="$">$18,420</span><span class="mono cap">/ $28,000 cap</span></div>
+            <div class="dash-bar"><i style="width:66%"></i></div>
+            <div class="dash-rows">
+              <div class="dash-row"><div><span class="mono">Intel Analysis</span><span class="mono v">$8,900</span></div><div class="mini"><i style="width:82%"></i></div></div>
+              <div class="dash-row"><div><span class="mono">Eng Copilot</span><span class="mono v">$6,200</span></div><div class="mini"><i style="width:57%"></i></div></div>
+              <div class="dash-row"><div><span class="mono">Batch Pipelines</span><span class="mono v">$3,320</span></div><div class="mini"><i style="width:31%"></i></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features" id="docs">
+      <div class="container">
+        <h2 class="mono">Everything IT needs to say yes to AI</h2>
+        <div class="feat-grid reveal">
+          <div class="feat"><h4>SSO &amp; MFA</h4><p>OIDC, group-mapped policy</p></div>
+          <div class="feat"><h4>Model allowlists</h4><p>Approve models per group</p></div>
+          <div class="feat"><h4>Budget caps</h4><p>Hard caps &amp; auto-cutoff</p></div>
+          <div class="feat"><h4>Smart routing</h4><p>Cheapest capable model</p></div>
+          <div class="feat"><h4>Egress control</h4><p>Deny-by-default allow-list</p></div>
+          <div class="feat"><h4>Audit logging</h4><p>Hash-chained, metadata-only</p></div>
+          <div class="feat"><h4>Per-user quotas</h4><p>Request &amp; token rate limits</p></div>
+          <div class="feat"><h4>Self-hosted</h4><p>Air-gap &amp; GovCloud</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="band cta" id="cta">
+      <div class="container center reveal">
+        <svg class="cta-mark" width="40" height="46" viewBox="0 0 48 56" fill="none" aria-hidden="true">
+          <polygon points="24,2 44,13 44,37 24,54 4,37 4,13" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M24 28 L24 14 M24 28 L14 38 M24 28 L34 38" stroke="currentColor" stroke-width="1.9"/>
+          <circle cx="24" cy="28" r="4.6" fill="var(--olive)"/>
+        </svg>
+        <h2 class="mono cta-h">Put a control plane<br />in front of AI.</h2>
+        <p class="cta-p">Map SecRouter to your environment and compliance posture — or clone it and bring up the secured test stack in one command.</p>
+        <div class="cta-actions">
+          <a class="btn btn-solid btn-lg" href="mailto:hello@secrouter.io?subject=SecRouter%20briefing">Request a briefing</a>
+          <a class="btn btn-outline btn-lg" href="https://github.com/spaceProbe/secrouter">Read the docs</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="#top">
+          <svg class="mark" width="22" height="25" viewBox="0 0 48 56" fill="none" aria-hidden="true">
+            <polygon points="24,2 44,13 44,37 24,54 4,37 4,13" stroke="#f5f3ea" stroke-width="2.6" stroke-linejoin="round"/>
+            <circle cx="24" cy="28" r="5.5" fill="#aebb78"/>
+          </svg>
+          <span class="wordmark light"><span class="sec-l">SEC</span>ROUTER</span>
+        </a>
+        <p>The secure control plane for enterprise AI. Built for defense and regulated industry.</p>
+      </div>
+      <nav class="footer-cols" aria-label="Footer">
+        <div><h5>Platform</h5><a href="#platform">Overview</a><a href="#security">Security</a><a href="#spend">Cost control</a></div>
+        <div><h5>Resources</h5><a href="https://github.com/spaceProbe/secrouter">GitHub</a><a href="https://github.com/spaceProbe/secrouter/blob/main/docs/compliance/cmmc-control-matrix.md">Control matrix</a><a href="mailto:hello@secrouter.io">Contact</a></div>
+      </nav>
+    </div>
+    <div class="container footer-base">
+      <span>© <span id="year">2026</span> SecRouter</span>
+      <span>NIST 800-171 R2 control mapping · Self-hosted · MIT licensed</span>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" font-family="'IBM Plex Mono', ui-monospace, monospace">
+  <rect width="1200" height="630" fill="#232a16"/>
+  <!-- faint deco hexagon, top-right -->
+  <g transform="translate(820,-60) scale(13)" opacity="0.10">
+    <polygon points="24,2 44,13 44,37 24,54 4,37 4,13" fill="none" stroke="#f5f3ea" stroke-width="0.7" stroke-linejoin="round"/>
+    <path d="M24 28 L24 14 M24 28 L14 38 M24 28 L34 38 M24 14 L14 38 M24 14 L34 38 M14 38 L34 38" stroke="#f5f3ea" stroke-width="0.5"/>
+  </g>
+
+  <!-- brand lockup -->
+  <g transform="translate(90,86)">
+    <g transform="scale(0.92)">
+      <polygon points="24,2 44,13 44,37 24,54 4,37 4,13" fill="none" stroke="#f5f3ea" stroke-width="2.4" stroke-linejoin="round"/>
+      <path d="M24 28 L24 14 M24 28 L14 38 M24 28 L34 38" stroke="#f5f3ea" stroke-width="2.2"/>
+      <circle cx="24" cy="14" r="2.7" fill="#f5f3ea"/><circle cx="14" cy="38" r="2.7" fill="#f5f3ea"/><circle cx="34" cy="38" r="2.7" fill="#f5f3ea"/>
+      <circle cx="24" cy="28" r="4.4" fill="#cdd6a6"/>
+    </g>
+    <text x="62" y="40" font-size="30" font-weight="600" letter-spacing="1.2"><tspan fill="#aebb78">SEC</tspan><tspan fill="#f5f3ea">ROUTER</tspan></text>
+  </g>
+
+  <!-- headline -->
+  <text x="90" y="300" fill="#f5f3ea" font-size="78" font-weight="600" letter-spacing="-1">Govern AI use.</text>
+  <text x="90" y="392" fill="#aebb78" font-size="78" font-weight="600" letter-spacing="-1">Contain AI spend.</text>
+
+  <text x="92" y="452" fill="#c9c8b8" font-size="25" font-family="'IBM Plex Sans', system-ui, sans-serif">The secure API gateway between your teams and every model — policy, egress, and spend control.</text>
+
+  <!-- chips -->
+  <g font-size="18" font-weight="500" fill="#aebb78" letter-spacing="2">
+    <g transform="translate(92,512)"><rect width="218" height="44" rx="5" fill="none" stroke="#3d4626"/><text x="109" y="29" text-anchor="middle">POLICY ENFORCEMENT</text></g>
+    <g transform="translate(326,512)"><rect width="186" height="44" rx="5" fill="none" stroke="#3d4626"/><text x="93" y="29" text-anchor="middle">EGRESS CONTROL</text></g>
+    <g transform="translate(528,512)"><rect width="150" height="44" rx="5" fill="none" stroke="#3d4626"/><text x="75" y="29" text-anchor="middle">SPEND CAPS</text></g>
+    <g transform="translate(694,512)"><rect width="186" height="44" rx="5" fill="none" stroke="#3d4626"/><text x="93" y="29" text-anchor="middle">GOVCLOUD READY</text></g>
+  </g>
+</svg>
