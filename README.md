@@ -42,9 +42,26 @@ If you later earn SOC 2 / FedRAMP or ship features like PII redaction, add those
 
 ```
 index.html     semantic page + SEO head (meta, OG, Twitter, JSON-LD), IBM Plex
+security.html  security brief page
 styles.css     handoff design tokens (sand + dark olive), responsive
 script.js      mobile nav, sticky nav, scroll-reveal, spend count-up
 og-image.svg   social card source → og-image.png
 favicon.svg    hexagon routing mark on olive tile
 robots.txt · sitemap.xml
+docs-src/      Sphinx docs source (MyST markdown, Furo theme)
+docs/          built docs site, served at /docs/  (regenerate; see below)
 ```
+
+## Docs (Sphinx)
+
+The product docs are a Sphinx site (Furo theme, MyST markdown) served under `/docs/`. The site's "Docs" links point to `docs/index.html`.
+
+Rebuild after editing anything in `docs-src/`:
+
+```bash
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r docs-src/requirements.txt
+sphinx-build -b html docs-src docs && touch docs/.nojekyll
+```
+
+`docs/` is committed so it deploys with the static site (no build step on the host). `.nojekyll` (repo root + `docs/`) keeps GitHub Pages from stripping the `_static/` folder.
