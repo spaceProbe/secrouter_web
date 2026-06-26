@@ -18,7 +18,7 @@ A request with no token, an invalid token, or one missing MFA is rejected with `
 ## Make a request
 
 ```bash
-curl https://secrouter.example.mil/v1/chat/completions \
+curl https://secrouter.example.url/v1/chat/completions \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -66,7 +66,7 @@ deep mode: Why does this recursive CTE produce duplicates?
 Any user can check their own spend:
 
 ```bash
-curl -H "Authorization: Bearer $TOKEN" https://secrouter.example.mil/v1/usage
+curl -H "Authorization: Bearer $TOKEN" https://secrouter.example.url/v1/usage
 ```
 
 ```json
@@ -95,7 +95,7 @@ Providers and the egress allow-list are shown read-only (they stay file-managed 
 from openai import OpenAI
 
 client = OpenAI(
-    base_url="https://secrouter.example.mil/v1",
+    base_url="https://secrouter.example.url/v1",
     api_key=token,   # your OIDC access token
 )
 resp = client.chat.completions.create(

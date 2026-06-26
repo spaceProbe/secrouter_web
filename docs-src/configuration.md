@@ -105,7 +105,7 @@ The `security` block is **validated at startup and fails closed** — the server
 Edit the config, then have an admin POST to reload — the new config is re-validated (fail-closed) before it's applied:
 
 ```bash
-curl -X POST -H "Authorization: Bearer $ADMIN_TOKEN" https://secrouter.example.mil/reload-config
+curl -X POST -H "Authorization: Bearer $ADMIN_TOKEN" https://secrouter.example.url/reload-config
 ```
 
 Policy and tier→model edits made in the **admin console** apply live without a reload.

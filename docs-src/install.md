@@ -13,7 +13,7 @@ SecRouter is a Node.js service with a near-zero dependency footprint. Pick the p
 The fastest way to try the router. Security is disabled by default — **dev only, not for CUI**.
 
 ```bash
-git clone https://github.com/spaceProbe/secrouter.git
+git clone https://git.secrouter.io/spaceProbe/secrouter.git
 cd secrouter
 npm install
 npm run build        # → dist/server.js

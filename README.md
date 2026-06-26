@@ -7,7 +7,7 @@
 
 # SecRouter — marketing site
 
-The landing page for [SecRouter](https://github.com/spaceProbe/secrouter), built to the designer handoff (`Secure AI API Router Logo` bundle). Static, dependency-free, SEO-optimized.
+The landing page for [SecRouter](https://git.secrouter.io/spaceProbe/secrouter), built to the designer handoff (`Secure AI API Router Logo` bundle). Static, dependency-free, SEO-optimized.
 
 **Design system:** warm-sand light theme (`#ece8dc`) with dark-olive bands (`#232a16`), olive accent (`#54672f`), IBM Plex Mono (headings/labels/data) + IBM Plex Sans (body). New hexagon "routing badge" logo.
 
@@ -34,9 +34,10 @@ If you later earn SOC 2 / FedRAMP or ship features like PII redaction, add those
 ## Also before launch
 
 1. **Replace the domain** `https://secrouter.io` in `index.html`, `robots.txt`, `sitemap.xml`.
-2. **Wire the CTAs.** "Request a briefing" / "Contact" currently use a `mailto:sales@secrouter.io` placeholder; "Read the docs" points at the GitHub repo. Point them at your real booking/contact flow.
-3. **Fonts (optional).** IBM Plex loads from Google Fonts. For an air-gapped/privacy-strict deploy, self-host the woff2 files and swap the `<link>` for `@font-face`.
-4. The `og-image.png` is rendered from `og-image.svg` — re-run `rsvg-convert -w 1200 -h 630 og-image.svg -o og-image.png` if you edit it.
+2. **Wire the CTAs.** "Request a briefing" / "Contact" currently use a `mailto:sales@secrouter.io` placeholder — point them at your real booking/contact flow.
+3. **Repo & doc hosts are placeholders.** The repo URL (`https://git.secrouter.io/spaceProbe/secrouter`) and the example host in the docs (`secrouter.example.url`) are placeholders — set them to your real git host and gateway domain.
+4. **Fonts (optional).** IBM Plex loads from Google Fonts. For an air-gapped/privacy-strict deploy, self-host the woff2 files and swap the `<link>` for `@font-face`.
+5. The `og-image.png` is rendered from `og-image.svg` — re-run `rsvg-convert -w 1200 -h 630 og-image.svg -o og-image.png` if you edit it.
 
 ## Structure
 
