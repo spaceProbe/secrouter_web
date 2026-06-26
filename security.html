@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#232a16" />
+
+  <title>Security Brief — SecRouter | Architecture, Controls &amp; Compliance</title>
+  <meta name="description" content="How SecRouter secures AI use: deny-by-default OIDC authentication and authorization, egress control by data classification, hash-chained metadata-only audit, self-hosted/GovCloud/air-gap deployment, FIPS-aware crypto, and NIST 800-171 / CMMC L3 control mapping." />
+  <link rel="canonical" href="https://secrouter.io/security.html" />
+  <meta name="robots" content="index, follow" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="SecRouter" />
+  <meta property="og:url" content="https://secrouter.io/security.html" />
+  <meta property="og:title" content="SecRouter — Security Brief" />
+  <meta property="og:description" content="Deny-by-default access, egress control by data classification, tamper-evident audit, FIPS-aware crypto, and NIST 800-171 / CMMC L3 control mapping." />
+  <meta property="og:image" content="https://secrouter.io/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SecRouter — Security Brief" />
+  <meta name="twitter:description" content="How SecRouter secures AI use, end to end — access, egress, audit, deployment, crypto, and compliance." />
+  <meta name="twitter:image" content="https://secrouter.io/og-image.png" />
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "SecRouter Security Brief",
+    "description": "The security architecture and compliance posture of SecRouter, the secure AI API gateway.",
+    "about": "AI security, access control, data egress control, audit, compliance",
+    "url": "https://secrouter.io/security.html"
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav-wrap" id="top">
+    <nav class="container nav" aria-label="Primary">
+      <a class="brand" href="index.html" aria-label="SecRouter home">
+        <svg class="mark" width="26" height="29" viewBox="0 0 48 56" fill="none" aria-hidden="true">
+          <polygon points="24,2 44,13 44,37 24,54 4,37 4,13" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+          <path d="M24 28 L24 14 M24 28 L14 38 M24 28 L34 38" stroke="currentColor" stroke-width="2.2"/>
+          <circle cx="24" cy="28" r="5" fill="var(--olive)"/>
+        </svg>
+        <span class="wordmark"><span class="sec">SEC</span>ROUTER</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html#platform">Platform</a>
+        <a href="index.html#security">Security</a>
+        <a href="index.html#spend">Spend</a>
+        <a href="index.html#docs">Docs</a>
+      </div>
+      <a class="btn btn-solid nav-access" href="index.html#cta">Request access</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- HERO -->
+    <section class="page-hero">
+      <div class="hero-deco" aria-hidden="true">
+        <svg width="520" height="600" viewBox="0 0 48 56" fill="none">
+          <polygon points="24,2 44,13 44,37 24,54 4,37 4,13" stroke="#f5f3ea" stroke-width="0.7" stroke-linejoin="round"/>
+          <path d="M24 28 L24 14 M24 28 L14 38 M24 28 L34 38 M24 14 L14 38 M24 14 L34 38 M14 38 L34 38" stroke="#f5f3ea" stroke-width="0.5"/>
+        </svg>
+      </div>
+      <div class="container" style="position:relative;">
+        <p class="eyebrow">Security brief</p>
+        <h1>How SecRouter secures AI use — end to end.</h1>
+        <p class="lead">SecRouter sits as the single, deny-by-default gateway between your teams and every model. Every request is authenticated, authorized, routed, and logged; nothing reaches a model you didn't sanction, and data never leaves your boundary unless policy says so.</p>
+        <p class="meta">Deny-by-default · Self-hosted / GovCloud / air-gap · Tamper-evident audit</p>
+      </div>
+    </section>
+
+    <!-- CONTROL MODEL -->
+    <section class="band">
+      <div class="container prose reveal">
+        <p class="eyebrow olive">The control model</p>
+        <h2 class="mono">Four gates around every model</h2>
+        <p>SecRouter is the only path from your applications to a model, and it refuses anything that isn't explicitly allowed. A request flows through <strong>authentication</strong> (who is this?), <strong>authorization</strong> (may they use this tier and model, within budget?), <strong>routing</strong> (which model is cheapest-capable?), and an <strong>egress gate</strong> (is this destination authorized for this data classification?) — and the entire path is written to a tamper-evident log. If any gate says no, the request never leaves the boundary.</p>
+      </div>
+    </section>
+
+    <!-- CONTROL AREAS -->
+    <section class="band band-alt">
+      <div class="container">
+        <p class="eyebrow olive">Controls</p>
+        <h2 class="mono" style="margin-bottom:28px;">What's enforced, by area</h2>
+        <div class="brief-grid reveal">
+          <article class="brief-card">
+            <h3>Identity &amp; access</h3>
+            <p>Every request carries a validated OIDC token from your IdP, with MFA asserted from the token. Authorization is deny-by-default.</p>
+            <ul>
+              <li>OIDC SSO with MFA enforcement</li>
+              <li>RBAC from group / role claims</li>
+              <li>Per-group and per-user model allowlists</li>
+              <li>Lock an individual account below the org default</li>
+            </ul>
+          </article>
+          <article class="brief-card">
+            <h3>Data flow &amp; egress</h3>
+            <p>Each destination is allow-listed by host and tagged with the classifications it may receive. A request above its clearance is refused before any bytes leave.</p>
+            <ul>
+              <li>Deny-by-default upstream allow-list</li>
+              <li>Data-classification gate per request</li>
+              <li>In-boundary or GovCloud endpoints only</li>
+              <li>No provider you didn't sanction</li>
+            </ul>
+          </article>
+          <article class="brief-card">
+            <h3>Audit &amp; accountability</h3>
+            <p>Every auth, authorization, routing, and usage event is recorded — metadata only, never prompt or response content — in a tamper-evident chain.</p>
+            <ul>
+              <li>Hash-chained, tamper-evident log</li>
+              <li>Metadata only: counts, model ids, decisions, hashes</li>
+              <li>Traceable to an individual principal</li>
+              <li>Forward to your SIEM over syslog</li>
+            </ul>
+          </article>
+          <article class="brief-card">
+            <h3>Deployment &amp; isolation</h3>
+            <p>Run SecRouter on your own infrastructure — fully disconnected if required. You hold the keys; the config fails closed if it isn't safe.</p>
+            <ul>
+              <li>Self-hosted, GovCloud (IL4–5), or air-gapped</li>
+              <li>No outbound calls required</li>
+              <li>Non-root, least-privilege runtime</li>
+              <li>Fail-closed startup validation</li>
+            </ul>
+          </article>
+          <article class="brief-card">
+            <h3>Cryptography</h3>
+            <p>Token-signature verification and TLS run through the host crypto provider, so SecRouter inherits a FIPS-validated module when one is present.</p>
+            <ul>
+              <li>FIPS-aware; fail-closed when FIPS is required</li>
+              <li>TLS 1.2+ with a FIPS cipher policy</li>
+              <li>Signed-token verification (no symmetric/none algs)</li>
+              <li>Terminate TLS at a validated front end, or natively</li>
+            </ul>
+          </article>
+          <article class="brief-card">
+            <h3>Compliance alignment</h3>
+            <p>Controls map to NIST SP 800-171 Rev 2 and selected SP 800-172 enhancements — the technical baseline behind CMMC Level 3.</p>
+            <ul>
+              <li>NIST 800-171 R2 control mapping</li>
+              <li>Selected 800-172 enhancements</li>
+              <li>CMMC Level 3 control mapping</li>
+              <li>Evidence exportable for assessors</li>
+            </ul>
+          </article>
+        </div>
+        <p class="note"><strong>On compliance:</strong> these are control mappings that accelerate your assessment, not a certification. Certification (SOC 2, FedRAMP, a CMMC assessment) is an organizational activity for your environment as a whole.</p>
+      </div>
+    </section>
+
+    <!-- SHARED RESPONSIBILITY -->
+    <section class="band dark">
+      <div class="container prose reveal">
+        <p class="eyebrow light">Shared responsibility</p>
+        <h2 class="mono">Where SecRouter ends and your environment begins</h2>
+        <p class="on-dark-muted" style="max-width:740px;">SecRouter enforces the application layer. Your environment provides the rest: a FIPS-validated crypto module (or a FIPS-terminating front end), your enterprise IdP and MFA, the network enclave (GovCloud or air-gap), time synchronization for the audit clock, and the SIEM that receives the audit stream. Map both halves and the accreditation boundary is clear.</p>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="band cta">
+      <div class="container center reveal">
+        <svg class="cta-mark" width="40" height="46" viewBox="0 0 48 56" fill="none" aria-hidden="true">
+          <polygon points="24,2 44,13 44,37 24,54 4,37 4,13" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M24 28 L24 14 M24 28 L14 38 M24 28 L34 38" stroke="currentColor" stroke-width="1.9"/>
+          <circle cx="24" cy="28" r="4.6" fill="var(--olive)"/>
+        </svg>
+        <h2 class="mono cta-h">Map SecRouter to your<br />compliance posture.</h2>
+        <p class="cta-p">Request a briefing and we'll walk the control set against your environment and accreditation requirements.</p>
+        <div class="cta-actions">
+          <a class="btn btn-solid btn-lg" href="mailto:hello@secrouter.io?subject=SecRouter%20security%20briefing">Request a briefing</a>
+          <a class="btn btn-outline btn-lg" href="index.html">Back to overview</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="index.html">
+          <svg class="mark" width="22" height="25" viewBox="0 0 48 56" fill="none" aria-hidden="true">
+            <polygon points="24,2 44,13 44,37 24,54 4,37 4,13" stroke="#f5f3ea" stroke-width="2.6" stroke-linejoin="round"/>
+            <circle cx="24" cy="28" r="5.5" fill="#aebb78"/>
+          </svg>
+          <span class="wordmark light"><span class="sec-l">SEC</span>ROUTER</span>
+        </a>
+        <p>The secure control plane for enterprise AI. Built for defense and regulated industry.</p>
+      </div>
+      <nav class="footer-cols" aria-label="Footer">
+        <div><h5>Platform</h5><a href="index.html#platform">Overview</a><a href="index.html#security">Security</a><a href="index.html#spend">Cost control</a></div>
+        <div><h5>Resources</h5><a href="https://github.com/spaceProbe/secrouter">GitHub</a><a href="security.html">Security brief</a><a href="mailto:hello@secrouter.io">Contact</a></div>
+      </nav>
+    </div>
+    <div class="container footer-base">
+      <span>© <span id="year">2026</span> SecRouter</span>
+      <span>NIST 800-171 R2 control mapping · Self-hosted</span>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
