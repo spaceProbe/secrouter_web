@@ -8,7 +8,7 @@
         <link rel="prefetch" href="_static/logo-mark-dark.svg" as="image">
 
     <!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
-        <title>Install - SecRouter Docs</title>
+        <title>Deploy - SecRouter Docs</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d75fae25" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -204,9 +204,10 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Install</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Deploy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control-validation.html">Control Validation</a></li>
 </ul>
 
 </div>
@@ -241,71 +242,68 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="install">
-<h1>Install<a class="headerlink" href="#install" title="Link to this heading">¶</a></h1>
-<p>SecRouter is a Node.js service with a near-zero dependency footprint. Pick the path that matches where you are: local dev, a secured test stack, or production.</p>
+          <section id="deploy">
+<h1>Deploy<a class="headerlink" href="#deploy" title="Link to this heading">¶</a></h1>
+<p>SecRouter runs as a single container (or a systemd service) inside your boundary. It is stateless except for a small SQLite store — the audit log and usage ledger — kept on a writable volume.</p>
 <section id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p><strong>Node.js ≥ 24</strong> (it uses the built-in <code class="docutils literal notranslate"><span class="pre">node:sqlite</span></code>).</p></li>
-<li><p>For containers: <strong>Docker</strong> + Docker Compose.</p></li>
-<li><p>For production: an enterprise <strong>OIDC IdP</strong> (Keycloak, Okta, Entra, Ping) and a model endpoint you’re authorized to use (e.g. Claude on <strong>AWS Bedrock GovCloud</strong>, or a self-hosted model).</p></li>
+<li><p>A container runtime (Docker / Podman), or a Linux host for the systemd unit.</p></li>
+<li><p>An enterprise <strong>OIDC IdP</strong> (Keycloak, Okta, Entra, Ping) for SSO + MFA.</p></li>
+<li><p>An authorized model endpoint: <strong>Claude on AWS Bedrock GovCloud</strong> (FedRAMP High / IL4–5) and/or self-hosted OpenAI-compatible models inside your boundary.</p></li>
+<li><p>For CUI: a <strong>FIPS-validated TLS front end</strong> (or a FIPS-linked runtime build).</p></li>
 </ul>
 </section>
-<section id="local-dev-security-off">
-<h2>Local dev (security off)<a class="headerlink" href="#local-dev-security-off" title="Link to this heading">¶</a></h2>
-<p>The fastest way to try the router. Security is disabled by default — <strong>dev only, not for CUI</strong>.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://git.secrouter.io/spaceProbe/secrouter.git
-<span class="nb">cd</span><span class="w"> </span>secrouter
-npm<span class="w"> </span>install
-npm<span class="w"> </span>run<span class="w"> </span>build<span class="w">        </span><span class="c1"># → dist/server.js</span>
-npm<span class="w"> </span>start<span class="w">            </span><span class="c1"># http://localhost:18800</span>
+<section id="run-the-container">
+<h2>Run the container<a class="headerlink" href="#run-the-container" title="Link to this heading">¶</a></h2>
+<p>The SecRouter image (built from the provided <code class="docutils literal notranslate"><span class="pre">Dockerfile</span></code>, or pulled from your registry) is multi-stage, non-root, and ships a <code class="docutils literal notranslate"><span class="pre">/health</span></code> check.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>secrouter<span class="w"> </span>--restart<span class="w"> </span>unless-stopped<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-p<span class="w"> </span><span class="m">18800</span>:18800<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">FREEROUTER_CONFIG</span><span class="o">=</span>/var/lib/secrouter/config.json<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">CLAWROUTER_HOST</span><span class="o">=</span><span class="m">0</span>.0.0.0<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-v<span class="w"> </span>/srv/secrouter:/var/lib/secrouter<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>secrouter:latest
 </pre></div>
 </div>
-<p>Send an OpenAI-compatible request:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>http://localhost:18800/v1/chat/completions<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;model&quot;:&quot;auto&quot;,&quot;messages&quot;:[{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;Hello!&quot;}]}&#39;</span>
-</pre></div>
-</div>
-</section>
-<section id="secured-test-stack-docker">
-<h2>Secured test stack (Docker)<a class="headerlink" href="#secured-test-stack-docker" title="Link to this heading">¶</a></h2>
-<p>A one-command stack — the <strong>secured</strong> router plus a mock IdP and mock model — so you can exercise SSO, policy, quotas, egress control, and the admin console without a real IdP or cloud account.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>secrouter/deploy
-docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker-compose.test.yml<span class="w"> </span>up<span class="w"> </span>--build
-./smoke-test.sh<span class="w">                       </span><span class="c1"># 401 → 200, chat, usage, admin-gating</span>
-open<span class="w"> </span>http://localhost:18800/admin<span class="w">     </span><span class="c1"># sign in (pick a test persona)</span>
-</pre></div>
-</div>
-<div class="note admonition">
-<p class="admonition-title">Get a token by hand</p>
-<p>The mock IdP issues real signed JWTs. Grab one and call the API:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">TOKEN</span><span class="o">=</span><span class="k">$(</span>./get-token.sh<span class="w"> </span>admin<span class="k">)</span><span class="w">         </span><span class="c1"># or: power | basic</span>
-curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span>http://localhost:18800/v1/usage
-</pre></div>
-</div>
-</div>
-</section>
-<section id="production">
-<h2>Production<a class="headerlink" href="#production" title="Link to this heading">¶</a></h2>
-<p>Start from the hardened reference config and the hardening guide in the repo:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">freerouter.config.hardened.example.json</span></code> — full config (OIDC, per-user policy/quotas, egress allow-list, FIPS, audit).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">docs/compliance/deployment-hardening.md</span></code> — the deployment runbook.</p></li>
+<li><p>The <strong>config and the SQLite store live on the writable volume</strong>, so the admin console can register model endpoints and the audit/usage data survive restarts. Seed it once — copy your hardened config to <code class="docutils literal notranslate"><span class="pre">/srv/secrouter/config.json</span></code> before first start. The volume must be writable by the <code class="docutils literal notranslate"><span class="pre">node</span></code> user (uid 1000).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--restart</span> <span class="pre">unless-stopped</span></code> lets the console’s <strong>Restart</strong> action bring the service back.</p></li>
 </ul>
-<p>A typical production rollout:</p>
-<ol class="arabic simple">
-<li><p>Copy the hardened config to <code class="docutils literal notranslate"><span class="pre">/etc/secrouter/config.json</span></code> and fill in your IdP, egress allow-list, and policy.</p></li>
-<li><p>Run the container (or the systemd unit in <code class="docutils literal notranslate"><span class="pre">deploy/secrouter.service</span></code>), mounting the config and a writable volume for the audit/usage store.</p></li>
-<li><p>Terminate TLS at a FIPS-validated front end (recommended) and set <code class="docutils literal notranslate"><span class="pre">requireFips:</span> <span class="pre">true</span></code>.</p></li>
-<li><p>Point <code class="docutils literal notranslate"><span class="pre">audit.sink</span></code> at your SIEM.</p></li>
-</ol>
-<p>The server <strong>fails closed</strong> — it refuses to start if the security config is invalid or FIPS is required but unavailable.</p>
-<div class="tip admonition">
-<p class="admonition-title">Build artifact</p>
-<p><code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">run</span> <span class="pre">build</span></code> emits <code class="docutils literal notranslate"><span class="pre">dist/server.js</span></code>; run it with <code class="docutils literal notranslate"><span class="pre">node</span> <span class="pre">dist/server.js</span></code>. The container image (<code class="docutils literal notranslate"><span class="pre">Dockerfile</span></code>) is multi-stage, non-root, with a <code class="docutils literal notranslate"><span class="pre">/health</span></code> healthcheck.</p>
-</div>
+</section>
+<section id="production-configuration">
+<h2>Production configuration<a class="headerlink" href="#production-configuration" title="Link to this heading">¶</a></h2>
+<p>Start from the hardened reference config (ships with the release) and fill in:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">oidc</span></code></strong> — your IdP issuer / audience / JWKS, and <code class="docutils literal notranslate"><span class="pre">requireMfa:</span> <span class="pre">true</span></code>.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">egress.allowlist</span></code></strong> — the deny-by-default destinations and the data classifications each may receive (your Bedrock GovCloud host and/or self-hosted model host).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">policy</span></code></strong> — per-group / per-user allowed tiers and models, budgets, and rate limits.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">requireFips:</span> <span class="pre">true</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">tls.mode:</span> <span class="pre">&quot;frontend&quot;</span></code></strong>.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">audit</span></code></strong> — <code class="docutils literal notranslate"><span class="pre">sink:</span> <span class="pre">&quot;both&quot;</span></code> plus your SIEM syslog target.</p></li>
+</ul>
+<p>See <a class="reference internal" href="configuration.html"><span class="std std-doc">Configuration</span></a> for the full reference, and <a class="reference internal" href="control-validation.html"><span class="std std-doc">Control Validation</span></a> for how each setting becomes assessor evidence.</p>
+</section>
+<section id="tls-fips">
+<h2>TLS &amp; FIPS<a class="headerlink" href="#tls-fips" title="Link to this heading">¶</a></h2>
+<p>Terminate TLS at a <strong>FIPS-validated front end</strong> (recommended): SecRouter binds localhost behind the proxy — set <code class="docutils literal notranslate"><span class="pre">tls.mode:</span> <span class="pre">&quot;frontend&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">requireFips:</span> <span class="pre">true</span></code>. Or terminate <strong>natively</strong> (<code class="docutils literal notranslate"><span class="pre">tls.mode:</span> <span class="pre">&quot;native&quot;</span></code> with a cert/key on a FIPS-linked runtime). The cipher policy follows NIST SP 800-52r2.</p>
+</section>
+<section id="govcloud-air-gap">
+<h2>GovCloud &amp; air-gap<a class="headerlink" href="#govcloud-air-gap" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>GovCloud</strong> — point egress at <code class="docutils literal notranslate"><span class="pre">bedrock-runtime.&lt;region&gt;.amazonaws.com</span></code> and supply AWS credentials via environment variables (never in the config or logs).</p></li>
+<li><p><strong>Air-gapped</strong> — route only to in-boundary self-hosted models; no outbound calls are required.</p></li>
+</ul>
+</section>
+<section id="systemd-non-container">
+<h2>systemd (non-container)<a class="headerlink" href="#systemd-non-container" title="Link to this heading">¶</a></h2>
+<p>Install the provided <code class="docutils literal notranslate"><span class="pre">secrouter.service</span></code> unit, put the config at <code class="docutils literal notranslate"><span class="pre">/etc/secrouter/config.json</span></code> and secrets in <code class="docutils literal notranslate"><span class="pre">/etc/secrouter/secrets.env</span></code>, ensure the store directory is writable by the service user, then <code class="docutils literal notranslate"><span class="pre">systemctl</span> <span class="pre">enable</span> <span class="pre">--now</span> <span class="pre">secrouter</span></code>. The unit restarts on failure.</p>
+</section>
+<section id="fail-closed-startup">
+<h2>Fail-closed startup<a class="headerlink" href="#fail-closed-startup" title="Link to this heading">¶</a></h2>
+<p>The server <strong>refuses to start</strong> if the security config is invalid, or if <code class="docutils literal notranslate"><span class="pre">requireFips</span></code> is set but FIPS crypto is unavailable — a misconfiguration never silently runs an unsafe gateway.</p>
+</section>
+<section id="health-restart">
+<h2>Health &amp; restart<a class="headerlink" href="#health-restart" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/health</span></code> (unauthenticated) reports status and whether security is enabled — use it for liveness probes. Config changes made in the console are applied with <strong>Reload</strong> (no downtime) or <strong>Restart</strong>; with a restart policy in place the service returns automatically.</p>
 </section>
 </section>
 
@@ -366,11 +364,15 @@ curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Aut
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Install</a><ul>
+<li><a class="reference internal" href="#">Deploy</a><ul>
 <li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
-<li><a class="reference internal" href="#local-dev-security-off">Local dev (security off)</a></li>
-<li><a class="reference internal" href="#secured-test-stack-docker">Secured test stack (Docker)</a></li>
-<li><a class="reference internal" href="#production">Production</a></li>
+<li><a class="reference internal" href="#run-the-container">Run the container</a></li>
+<li><a class="reference internal" href="#production-configuration">Production configuration</a></li>
+<li><a class="reference internal" href="#tls-fips">TLS &amp; FIPS</a></li>
+<li><a class="reference internal" href="#govcloud-air-gap">GovCloud &amp; air-gap</a></li>
+<li><a class="reference internal" href="#systemd-non-container">systemd (non-container)</a></li>
+<li><a class="reference internal" href="#fail-closed-startup">Fail-closed startup</a></li>
+<li><a class="reference internal" href="#health-restart">Health &amp; restart</a></li>
 </ul>
 </li>
 </ul>

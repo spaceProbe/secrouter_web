@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Configuration" href="configuration.html"><link rel="prev" title="Install" href="install.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Configuration" href="configuration.html"><link rel="prev" title="Deploy" href="deploy.html">
         <link rel="prefetch" href="_static/logo-mark.svg" as="image">
         <link rel="prefetch" href="_static/logo-mark-dark.svg" as="image">
 
@@ -204,9 +204,10 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy.html">Deploy</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control-validation.html">Control Validation</a></li>
 </ul>
 
 </div>
@@ -367,9 +368,20 @@ deep mode: Why does this recursive CTE produce duplicates?
 <ul class="simple">
 <li><p><strong>Monitor</strong> per-user / model / day usage and cost.</p></li>
 <li><p><strong>Configure</strong> group and per-user policies and tier→model routing — changes are written to an audited overrides layer and applied live.</p></li>
+<li><p><strong>Add model endpoints</strong> (below) — register a local / on-prem model with a guided wizard.</p></li>
 <li><p><strong>Review</strong> the hash-chained audit trail.</p></li>
 </ul>
-<p>Providers and the egress allow-list are shown read-only (they stay file-managed for change control).</p>
+</section>
+<section id="add-a-local-or-on-prem-endpoint">
+<h2>Add a local or on-prem endpoint<a class="headerlink" href="#add-a-local-or-on-prem-endpoint" title="Link to this heading">¶</a></h2>
+<p>The <strong>Models</strong> tab has a guided wizard for registering a self-hosted, OpenAI-compatible model server (vLLM, Ollama, TGI, LM Studio, or any in-boundary endpoint):</p>
+<ol class="arabic simple">
+<li><p><strong>Connect</strong> — enter the base URL (e.g. <code class="docutils literal notranslate"><span class="pre">http://llm.internal:8000/v1</span></code>) and auth (an env-var name, a one-time token used only for the test, or none — many on-prem servers need no key), then <strong>Test endpoint</strong>. SecRouter probes it and lists the models it serves.</p></li>
+<li><p><strong>Select &amp; price</strong> — pick the models to register and set their <code class="docutils literal notranslate"><span class="pre">$</span></code>/M-token rates (default <code class="docutils literal notranslate"><span class="pre">0</span></code> for self-hosted compute, so per-user budgets and cost reports still apply). Optionally make one the primary for a routing tier.</p></li>
+<li><p><strong>Set egress</strong> — choose the data classifications this destination may receive. This writes a deny-by-default egress rule, so the endpoint is only reachable for those classifications.</p></li>
+<li><p><strong>Validate → Apply → Reload</strong> — SecRouter validates the change, writes it to the <strong>config file</strong> (atomically, with a <code class="docutils literal notranslate"><span class="pre">.bak</span></code> backup — the file stays your change-controlled source of truth), and you apply it with a no-downtime <strong>Reload</strong> or a full <strong>Restart</strong>.</p></li>
+</ol>
+<p>Every step is admin-only and audited. The probe is restricted to in-boundary hosts by default (set <code class="docutils literal notranslate"><span class="pre">SECROUTER_PROBE_ALLOW_HOSTS</span></code> to allow others). Because a new endpoint always comes with an explicit, validated egress rule, the deny-by-default CUI boundary is preserved.</p>
 </section>
 <section id="client-integration-openai-sdks">
 <h2>Client integration (OpenAI SDKs)<a class="headerlink" href="#client-integration-openai-sdks" title="Link to this heading">¶</a></h2>
@@ -402,14 +414,14 @@ deep mode: Why does this recursive CTE produce duplicates?
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="install.html">
+          <a class="prev-page" href="deploy.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Install</div>
+                <div class="title">Deploy</div>
                 
               </div>
             </a>
@@ -452,6 +464,7 @@ deep mode: Why does this recursive CTE produce duplicates?
 <li><a class="reference internal" href="#endpoints">Endpoints</a></li>
 <li><a class="reference internal" href="#see-your-usage">See your usage</a></li>
 <li><a class="reference internal" href="#admin-console">Admin console</a></li>
+<li><a class="reference internal" href="#add-a-local-or-on-prem-endpoint">Add a local or on-prem endpoint</a></li>
 <li><a class="reference internal" href="#client-integration-openai-sdks">Client integration (OpenAI SDKs)</a></li>
 </ul>
 </li>

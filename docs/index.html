@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Install" href="install.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Deploy" href="deploy.html">
         <link rel="prefetch" href="_static/logo-mark.svg" as="image">
         <link rel="prefetch" href="_static/logo-mark-dark.svg" as="image">
 
@@ -204,9 +204,10 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul>
-<li class="toctree-l1"><a class="reference internal" href="install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy.html">Deploy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control-validation.html">Control Validation</a></li>
 </ul>
 
 </div>
@@ -249,17 +250,21 @@
 <p class="admonition-title">What it does</p>
 <p><strong>Govern</strong> — OIDC SSO + MFA, per-user/group model allowlists, deny-by-default egress.
 <strong>Contain spend</strong> — per-user token &amp; cost tracking, budgets, rate limits, smart routing.
-<strong>Prove it</strong> — tamper-evident audit, mapped to NIST 800-171 R2 / CMMC L3 controls.</p>
+<strong>Prove it</strong> — tamper-evident audit and one-click evidence export, mapped to NIST 800-171 R2 / CMMC L3 controls.</p>
 </div>
 <section id="get-started">
 <h2>Get started<a class="headerlink" href="#get-started" title="Link to this heading">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="install.html">Install</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="install.html#prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install.html#local-dev-security-off">Local dev (security off)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install.html#secured-test-stack-docker">Secured test stack (Docker)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install.html#production">Production</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy.html">Deploy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="deploy.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy.html#run-the-container">Run the container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy.html#production-configuration">Production configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy.html#tls-fips">TLS &amp; FIPS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy.html#govcloud-air-gap">GovCloud &amp; air-gap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy.html#systemd-non-container">systemd (non-container)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy.html#fail-closed-startup">Fail-closed startup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deploy.html#health-restart">Health &amp; restart</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a><ul>
@@ -269,6 +274,7 @@
 <li class="toctree-l2"><a class="reference internal" href="usage.html#endpoints">Endpoints</a></li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#see-your-usage">See your usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#admin-console">Admin console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#add-a-local-or-on-prem-endpoint">Add a local or on-prem endpoint</a></li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#client-integration-openai-sdks">Client integration (OpenAI SDKs)</a></li>
 </ul>
 </li>
@@ -278,12 +284,27 @@
 <li class="toctree-l2"><a class="reference internal" href="configuration.html#reload-without-restart">Reload without restart</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="control-validation.html">Control Validation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="control-validation.html#the-fast-path-one-click-evidence-bundle">The fast path: one-click evidence bundle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="control-validation.html#artifacts-at-a-glance">Artifacts at a glance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="control-validation.html#audit-trail-au-3-3-x">Audit trail — AU 3.3.x</a></li>
+<li class="toctree-l2"><a class="reference internal" href="control-validation.html#access-policy-identity-ac-3-1-x-ia-3-5-x">Access policy &amp; identity — AC 3.1.x / IA 3.5.x</a></li>
+<li class="toctree-l2"><a class="reference internal" href="control-validation.html#egress-data-flow-control-ac-3-1-3-sc-3-13-6">Egress / data-flow control — AC 3.1.3 / SC 3.13.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="control-validation.html#usage-accountability-au-3-3-2">Usage &amp; accountability — AU 3.3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="control-validation.html#configuration-baseline-change-control-cm-3-4-x">Configuration baseline &amp; change control — CM 3.4.x</a></li>
+<li class="toctree-l2"><a class="reference internal" href="control-validation.html#crypto-fips-posture-sc-3-13-8-3-13-11">Crypto / FIPS posture — SC 3.13.8 / 3.13.11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="control-validation.html#collect-an-assessment-package">Collect an assessment package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="control-validation.html#shared-responsibility">Shared responsibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="control-validation.html#control-map">Control map</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <ul class="simple">
-<li><p><strong><a class="reference internal" href="install.html"><span class="std std-doc">Install</span></a></strong> — run it in dev, as a secured Docker stack, or in production.</p></li>
-<li><p><strong><a class="reference internal" href="usage.html"><span class="std std-doc">Usage</span></a></strong> — the API, authentication, the admin console, smart routing.</p></li>
-<li><p><strong><a class="reference internal" href="configuration.html"><span class="std std-doc">Configuration</span></a></strong> — providers, tiers, and the security block.</p></li>
+<li><p><strong><a class="reference internal" href="deploy.html"><span class="std std-doc">Deploy</span></a></strong> — run the container in your boundary: production config, TLS/FIPS, GovCloud, air-gap, systemd.</p></li>
+<li><p><strong><a class="reference internal" href="usage.html"><span class="std std-doc">Usage</span></a></strong> — the API, authentication, the admin console, smart routing, adding endpoints.</p></li>
+<li><p><strong><a class="reference internal" href="configuration.html"><span class="std std-doc">Configuration</span></a></strong> — providers, tiers, models, and the security block.</p></li>
+<li><p><strong><a class="reference internal" href="control-validation.html"><span class="std std-doc">Control Validation</span></a></strong> — retrieve the CMMC artifacts: audit, access policy, egress, FIPS posture, and a one-click evidence bundle.</p></li>
 </ul>
 </section>
 <section id="the-request-pipeline">
@@ -303,12 +324,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="install.html">
+          <a class="next-page" href="deploy.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Install</div>
+                <div class="title">Deploy</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>

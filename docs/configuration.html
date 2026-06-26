@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="prev" title="Usage" href="usage.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Control Validation" href="control-validation.html"><link rel="prev" title="Usage" href="usage.html">
         <link rel="prefetch" href="_static/logo-mark.svg" as="image">
         <link rel="prefetch" href="_static/logo-mark-dark.svg" as="image">
 
@@ -204,9 +204,10 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="install.html">Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy.html">Deploy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="control-validation.html">Control Validation</a></li>
 </ul>
 
 </div>
@@ -249,7 +250,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">./freerouter.config.json</span></code> (working directory)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">~/.config/freerouter/config.json</span></code></p></li>
 </ol>
-<p>The <code class="docutils literal notranslate"><span class="pre">security</span></code> block is <strong>validated at startup and fails closed</strong> — the server refuses to boot in an unsafe configuration. Start production from <code class="docutils literal notranslate"><span class="pre">freerouter.config.hardened.example.json</span></code> in the repo.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">security</span></code> block is <strong>validated at startup and fails closed</strong> — the server refuses to boot in an unsafe configuration. Start production from the hardened reference config that ships with the release.</p>
 <section id="shape">
 <h2>Shape<a class="headerlink" href="#shape" title="Link to this heading">¶</a></h2>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -280,7 +281,10 @@
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tiers</span></code></p></td>
 <td><p>Which model serves each tier (<code class="docutils literal notranslate"><span class="pre">SIMPLE</span></code> → <code class="docutils literal notranslate"><span class="pre">REASONING</span></code>), with optional <code class="docutils literal notranslate"><span class="pre">fallback</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">security</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">models</span></code></p></td>
+<td><p>Optional per-model catalog (<code class="docutils literal notranslate"><span class="pre">id</span></code>, <code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">inputPrice</span></code>, <code class="docutils literal notranslate"><span class="pre">outputPrice</span></code>, …) overlaid on the built-in registry, so local / on-prem models carry pricing for cost tracking. Prices are <code class="docutils literal notranslate"><span class="pre">$</span></code>/M tokens and default to <code class="docutils literal notranslate"><span class="pre">0</span></code>. Usually managed by the console’s <em>add endpoint</em> wizard.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">security</span></code></p></td>
 <td><p>Auth, per-user policy, egress control, audit, and TLS/FIPS. Off unless <code class="docutils literal notranslate"><span class="pre">enabled:</span> <span class="pre">true</span></code>.</p></td>
 </tr>
 </tbody>
@@ -373,7 +377,15 @@
       <footer>
         
         <div class="related-pages">
-          
+          <a class="next-page" href="control-validation.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Control Validation</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
           <a class="prev-page" href="usage.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">

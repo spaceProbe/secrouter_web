@@ -85,9 +85,19 @@ Browse to **`/admin`** and sign in (OIDC PKCE). Admins can:
 
 - **Monitor** per-user / model / day usage and cost.
 - **Configure** group and per-user policies and tier→model routing — changes are written to an audited overrides layer and applied live.
+- **Add model endpoints** (below) — register a local / on-prem model with a guided wizard.
 - **Review** the hash-chained audit trail.
 
-Providers and the egress allow-list are shown read-only (they stay file-managed for change control).
+## Add a local or on-prem endpoint
+
+The **Models** tab has a guided wizard for registering a self-hosted, OpenAI-compatible model server (vLLM, Ollama, TGI, LM Studio, or any in-boundary endpoint):
+
+1. **Connect** — enter the base URL (e.g. `http://llm.internal:8000/v1`) and auth (an env-var name, a one-time token used only for the test, or none — many on-prem servers need no key), then **Test endpoint**. SecRouter probes it and lists the models it serves.
+2. **Select & price** — pick the models to register and set their `$`/M-token rates (default `0` for self-hosted compute, so per-user budgets and cost reports still apply). Optionally make one the primary for a routing tier.
+3. **Set egress** — choose the data classifications this destination may receive. This writes a deny-by-default egress rule, so the endpoint is only reachable for those classifications.
+4. **Validate → Apply → Reload** — SecRouter validates the change, writes it to the **config file** (atomically, with a `.bak` backup — the file stays your change-controlled source of truth), and you apply it with a no-downtime **Reload** or a full **Restart**.
+
+Every step is admin-only and audited. The probe is restricted to in-boundary hosts by default (set `SECROUTER_PROBE_ALLOW_HOSTS` to allow others). Because a new endpoint always comes with an explicit, validated egress rule, the deny-by-default CUI boundary is preserved.
 
 ## Client integration (OpenAI SDKs)
 

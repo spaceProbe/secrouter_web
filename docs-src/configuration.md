@@ -6,7 +6,7 @@ SecRouter reads a single JSON config file, resolved in this order:
 2. `./freerouter.config.json` (working directory)
 3. `~/.config/freerouter/config.json`
 
-The `security` block is **validated at startup and fails closed** — the server refuses to boot in an unsafe configuration. Start production from `freerouter.config.hardened.example.json` in the repo.
+The `security` block is **validated at startup and fails closed** — the server refuses to boot in an unsafe configuration. Start production from the hardened reference config that ships with the release.
 
 ## Shape
 
@@ -34,6 +34,8 @@ The `security` block is **validated at startup and fails closed** — the server
   - Backends and how to reach them (`anthropic`, `openai`, or `bedrock` with a `region`).
 * - `tiers`
   - Which model serves each tier (`SIMPLE` → `REASONING`), with optional `fallback`.
+* - `models`
+  - Optional per-model catalog (`id`, `name`, `inputPrice`, `outputPrice`, …) overlaid on the built-in registry, so local / on-prem models carry pricing for cost tracking. Prices are `$`/M tokens and default to `0`. Usually managed by the console's *add endpoint* wizard.
 * - `security`
   - Auth, per-user policy, egress control, audit, and TLS/FIPS. Off unless `enabled: true`.
 ```

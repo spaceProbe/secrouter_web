@@ -8,7 +8,7 @@ It's a drop-in endpoint — point any OpenAI-compatible client at SecRouter, cha
 :class: tip
 **Govern** — OIDC SSO + MFA, per-user/group model allowlists, deny-by-default egress.
 **Contain spend** — per-user token & cost tracking, budgets, rate limits, smart routing.
-**Prove it** — tamper-evident audit, mapped to NIST 800-171 R2 / CMMC L3 controls.
+**Prove it** — tamper-evident audit and one-click evidence export, mapped to NIST 800-171 R2 / CMMC L3 controls.
 ```
 
 ## Get started
@@ -16,14 +16,16 @@ It's a drop-in endpoint — point any OpenAI-compatible client at SecRouter, cha
 ```{toctree}
 :maxdepth: 2
 
-install
+deploy
 usage
 configuration
+control-validation
 ```
 
-- **[Install](install.md)** — run it in dev, as a secured Docker stack, or in production.
-- **[Usage](usage.md)** — the API, authentication, the admin console, smart routing.
-- **[Configuration](configuration.md)** — providers, tiers, and the security block.
+- **[Deploy](deploy.md)** — run the container in your boundary: production config, TLS/FIPS, GovCloud, air-gap, systemd.
+- **[Usage](usage.md)** — the API, authentication, the admin console, smart routing, adding endpoints.
+- **[Configuration](configuration.md)** — providers, tiers, models, and the security block.
+- **[Control Validation](control-validation.md)** — retrieve the CMMC artifacts: audit, access policy, egress, FIPS posture, and a one-click evidence bundle.
 
 ## The request pipeline
 
