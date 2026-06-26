@@ -71,7 +71,7 @@ The `security` block is **validated at startup and fails closed** — the server
     }
   },
 
-  "audit": { "sink": "both", "syslog": { "host": "siem.internal", "port": 6514, "protocol": "tcp" } },
+  "audit": { "sink": "both", "syslog": { "host": "siem.example.url", "port": 6514, "protocol": "tcp" } },
   "tls": { "mode": "frontend" }
 }
 ```
