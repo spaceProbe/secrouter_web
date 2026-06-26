@@ -71,7 +71,7 @@ curl -H "Authorization: Bearer $TOKEN" https://secrouter.example.url/v1/usage
 
 ```json
 {
-  "principal": "alice@dod.mil",
+  "principal": "alice@example.url",
   "usage": { "last24h": { "requestCount": 12, "inputTokens": 30400, "costUsd": 0.21 } },
   "budgets": [{ "window": "day", "maxCostUsd": 25 }]
 }

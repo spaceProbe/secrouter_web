@@ -14,7 +14,7 @@ The `security` block is **validated at startup and fails closed** — the server
 {
   "providers": {
     "bedrock": { "api": "bedrock", "region": "us-gov-west-1", "baseUrl": "https://bedrock-runtime.us-gov-west-1.amazonaws.com" },
-    "local":   { "api": "openai", "baseUrl": "https://llm.internal.example.mil/v1" }
+    "local":   { "api": "openai", "baseUrl": "https://llm.internal.example.url/v1" }
   },
   "tiers": {
     "SIMPLE":    { "primary": "local/llama-3.3-70b-instruct" },
@@ -46,7 +46,7 @@ The `security` block is **validated at startup and fails closed** — the server
   "requireFips": true,
 
   "oidc": {
-    "issuer": "https://idp.example.mil/realms/cui",
+    "issuer": "https://idp.example.url/realms/cui",
     "audience": "secrouter",
     "requireMfa": true,
     "groupsClaim": "groups",
