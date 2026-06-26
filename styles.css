@@ -200,6 +200,10 @@ h1,h2,h3,h4,h5 { margin:0 0 .5em; }
   .nav { padding:18px 20px; }
   .band, .band-tight { padding:64px 0; }
   .hero-grid { padding:56px 20px 64px; }
+  /* These three carry .container but re-declare `padding` with 32px sides, which
+     overrides .container's mobile 20px. Realign their horizontal inset to match
+     the rest of the page (vertical padding left intact). */
+  .trust-row, .footer-top, .footer-base { padding-left:20px; padding-right:20px; }
   .sec-cards { grid-template-columns:1fr; }
   .feat-grid { grid-template-columns:1fr; }
   .trust-mini { gap:8px 22px; }
