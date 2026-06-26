@@ -79,7 +79,7 @@ h1,h2,h3,h4,h5 { margin:0 0 .5em; }
 
 /* trust strip */
 .trust { background:var(--bg-alt); border-bottom:1px solid var(--border-2); }
-.trust-row { display:flex; flex-wrap:wrap; gap:14px 40px; align-items:center; justify-content:center; padding:20px 32px;
+.trust-row { display:flex; flex-wrap:wrap; gap:18px 40px; align-items:center; justify-content:center; padding:34px 32px;
   font:600 11.5px/1 var(--mono); letter-spacing:.12em; text-transform:uppercase; color:var(--muted2); }
 .trust-row i { color:#cbc7b9; font-style:normal; }
 
@@ -165,9 +165,9 @@ h1,h2,h3,h4,h5 { margin:0 0 .5em; }
 
 /* footer */
 .site-footer { background:var(--olive-dark); color:var(--on-dark-mut); }
-.footer-top { display:flex; flex-wrap:wrap; gap:40px; justify-content:space-between; padding:54px 32px 40px; }
+.footer-top { display:flex; flex-wrap:wrap; gap:40px; justify-content:space-between; padding:74px 32px 48px; }
 .footer-brand { max-width:300px; }
-.footer-brand .brand { margin-bottom:16px; }
+.footer-brand .brand { margin-bottom:20px; }
 .footer-brand .brand .mark { color:var(--on-dark); }
 .footer-brand p { font-size:13px; line-height:1.6; color:var(--on-dark-mut3); margin:0; }
 .footer-cols { display:flex; gap:56px; font-family:var(--mono); font-size:12.5px; }
@@ -196,14 +196,12 @@ h1,h2,h3,h4,h5 { margin:0 0 .5em; }
   .feat-grid { grid-template-columns:repeat(2,1fr); }
 }
 @media (max-width:640px) {
-  .container { padding:0 20px; }
+  /* horizontal gutter only — must not clobber vertical padding on .container rows
+     like .trust-row / .footer-top (use padding-inline, not the padding shorthand) */
+  .container { padding-inline:20px; }
   .nav { padding:18px 20px; }
   .band, .band-tight { padding:64px 0; }
   .hero-grid { padding:56px 20px 64px; }
-  /* These three carry .container but re-declare `padding` with 32px sides, which
-     overrides .container's mobile 20px. Realign their horizontal inset to match
-     the rest of the page (vertical padding left intact). */
-  .trust-row, .footer-top, .footer-base { padding-left:20px; padding-right:20px; }
   .sec-cards { grid-template-columns:1fr; }
   .feat-grid { grid-template-columns:1fr; }
   .trust-mini { gap:8px 22px; }
