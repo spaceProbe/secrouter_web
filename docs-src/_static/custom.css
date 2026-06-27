@@ -16,5 +16,11 @@ h1, h2, h3, h4,
 /* tighten the brand logo block */
 .sidebar-logo { max-width: 52px; }
 
+/* split brand: logo -> marketing site, wordmark -> docs home (two sibling links) */
+.sidebar-brand-logo-link,
+.sidebar-brand-name-link { display: block; text-decoration: none; color: inherit; }
+.sidebar-brand-logo-link:hover,
+.sidebar-brand-name-link:hover { opacity: 0.8; }
+
 /* eyebrow-style code chips feel a touch more "engineered" */
 code.literal, .highlight { border-radius: 4px; }
